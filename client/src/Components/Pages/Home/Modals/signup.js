@@ -9,12 +9,23 @@ import {
   Toast,
   CallAPI,
   API_URL,
+  Select,
+  GETAPI,
 } from "../../../common";
 import styles from "./styles.module.css";
+import { useEffect, useState } from "react";
 
 export const SignupModal = ({ user, isModalOpen, closeModal }) => {
   const { register, handleSubmit } = useForm();
   const nav = useNavigate();
+
+  const [genders, setGenders] = useState();
+  const [seeking, setSeeking] = useState();
+
+  useEffect(() => {
+    GETAPI(`${API_URL}users/genders`).then((res) => setGenders(res));
+    GETAPI(`${API_URL}users/seeking`).then((res) => setSeeking(res));
+  }, []);
 
   const onSubmit = async (data) => {
     if (data.password === data.password2 && data.password.length >= 8) {
@@ -88,6 +99,20 @@ export const SignupModal = ({ user, isModalOpen, closeModal }) => {
                 label="Type password again *"
                 required
                 placeholder="**************"
+              />
+              <Select
+                register={register}
+                label="Please Select Your Gender"
+                name="gender"
+                required
+                options={genders}
+              />
+              <Select
+                register={register}
+                label="Seeking:"
+                name="seeking"
+                required
+                options={genders}
               />
               <TextInput
                 register={register}

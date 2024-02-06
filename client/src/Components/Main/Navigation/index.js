@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
 export const Navigation = ({ currentPage }) => {
-  const navLabels = ["Dashboard", "Profile", "Forum"];
+  const navLabels = ["Dashboard", "Profile"];
 
   const navList = [];
   navLabels.forEach((label) => {

@@ -85,33 +85,7 @@ export const Profile = () => {
               </div>
             </div>
             <div className={styles.profile__activities}>
-              <div className={styles.profile__activity}>
-                <h2 className="text-4xl">Recent User Activity</h2>
-                {user.posts[0] ? (
-                  <>
-                    <h3 className="mt-2 text-2xl">Latest Post:</h3>
-                    <p>
-                      <Link to={`/forum/post/${user.posts[0].rec_id}`}>
-                        {user.posts[0].title}
-                      </Link>
-                    </p>
-                  </>
-                ) : (
-                  <p>"No recent posts yet."</p>
-                )}
-                {user.comments[0] ? (
-                  <>
-                    <h3 className="mt-5 text-2xl">Latest Comment:</h3>
-                    <p>
-                      <Link to={`/forum/post/${user.comments[0].postid}`}>
-                        {user.comments[0].comment}
-                      </Link>
-                    </p>
-                  </>
-                ) : (
-                  <p>"No recent Comments yet."</p>
-                )}
-              </div>
+              <div className={styles.profile__activity}></div>
 
               <div className="flex flex-col w-3/4 mx-auto h-3/4"></div>
             </div>

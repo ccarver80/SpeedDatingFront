@@ -25,7 +25,7 @@ export const Home = ({ user }) => {
 
         <div className={styles.home__header}>
           <div className={styles.home__title}>
-            <h1>Speed Dating App</h1>
+            <h1>Express Encounters</h1>
             <h2>Like nothing else you have experienced!</h2>
           </div>
         </div>
