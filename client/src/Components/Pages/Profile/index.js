@@ -18,6 +18,7 @@ export const Profile = () => {
     GETAPI(`${API_URL}users/user/${id}`).then((res) => setUser(res));
   }, [update]);
 
+  console.log(user);
   return (
     <>
       <Header pageTitle={"Profile"} />

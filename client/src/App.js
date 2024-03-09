@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
+import { CallAPI, API_URL } from "./Components/common";
 import { Dashboard, Home, Profile } from "./Components/Pages";
 import { Protected } from "./Components/Protected";
 import { PublicProfile } from "./Components/Pages/PublicProfile";
