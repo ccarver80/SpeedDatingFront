@@ -36,7 +36,7 @@ export const ChatRoom = () => {
     reset();
   };
 
-  console.log(users);
+  console.log(room);
   return (
     <>
       <div className={styles.profile}>
@@ -47,7 +47,9 @@ export const ChatRoom = () => {
           <div className="w-1/4 mx-auto border border-black h-fit">
             <h1>
               Users:{" "}
-              <ul>{users ? users.map((user) => <li>{user}</li>) : ""}</ul>
+              <ul>
+                {room ? room.users.map((user) => <li>{user.username}</li>) : ""}
+              </ul>
             </h1>
           </div>
 
