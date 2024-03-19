@@ -11,11 +11,13 @@ export function TextInput({
   required,
   value,
   defaultValue,
+  className,
 }) {
   return (
     <div className={styles.TextInput}>
       <label>{label}</label>
       <input
+        className={className}
         {...register(name)}
         type={type}
         placeholder={placeholder}

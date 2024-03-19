@@ -1,42 +1,72 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Modal, TextInput, CallAPI, API_URL, Toast } from "../../../common";
+import { toast } from "react-toastify";
 
 export const AddRoom = ({ isModalOpen, closeModal }) => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
+  const [error, setError] = useState();
 
   const onSubmitChatroom = async (data) => {
-    console.log(data);
-    const res = await CallAPI(`${API_URL}rooms/createRoom`, "POST", data);
+    setError();
+    let zipcodeRegex = /^([0-9]{5})/;
+    let checkzip = zipcodeRegex.test(data.room_zipcode);
+    if (!checkzip || data.room_zipcode.length > 5) {
+      setError("Please enter a valid zipcode");
+    } else {
+      const res = await CallAPI(`${API_URL}rooms/createRoom`, "POST", data);
+      if (res.rec_id) {
+        reset();
+        setError();
+        closeModal();
+        toast.success("Room Added Sucessfully!", Toast);
+      } else if (res.message) {
+        reset();
+        toast.error(res.message, Toast);
+      } else {
+        toast.error("Sorry there was a problem adding the room", Toast);
+      }
+    }
   };
 
   return (
     <Modal isModalOpen={isModalOpen} closeModal={closeModal} maxWidth="800px">
       {/* CHATROOM CREATE */}
-      <form onSubmit={handleSubmit(onSubmitChatroom)}>
-        <TextInput
-          register={register}
-          label="Chatroom Name"
-          name="room_name"
-          required
-        />
+      <div className="p-5 bg-white rounded-xl">
+        <form
+          className="flex flex-col w-1/2 mx-auto gap-y-5"
+          onSubmit={handleSubmit(onSubmitChatroom)}
+        >
+          <TextInput
+            register={register}
+            label="Chatroom Name"
+            name="room_name"
+            required
+          />
 
-        <TextInput
-          register={register}
-          label="Description"
-          name="room_description"
-          required
-        />
+          <TextInput
+            register={register}
+            label="Description"
+            name="room_description"
+            required
+          />
 
-        <TextInput
-          register={register}
-          label="Zipcode"
-          name="room_zipcode"
-          required
-        />
+          <TextInput
+            register={register}
+            label="Zipcode"
+            name="room_zipcode"
+            required
+          />
 
-        <button type="submit">Submit</button>
-      </form>
+          <button
+            className="p-2 mx-auto font-bold text-white bg-blue-400 border border-blue-900 w-fit rounded-xl"
+            type="submit"
+          >
+            Submit
+          </button>
+          {error ? <p>{error}</p> : ""}
+        </form>
+      </div>
     </Modal>
   );
 };
