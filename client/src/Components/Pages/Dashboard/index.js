@@ -110,7 +110,7 @@ export const Dashboard = () => {
                         {room.room_city}, {room.room_state}
                       </p>
                       <p>
-                        <b>Availble Spots: </b> 3
+                        <b>Availble Spots: </b> {room.spots_availble}
                       </p>
                       <Link
                         to={`/chatroom/${room.rec_id}`}
