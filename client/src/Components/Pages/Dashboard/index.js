@@ -7,6 +7,7 @@ import { AddRoom } from "./modals/addRoom";
 import { Link } from "react-router-dom";
 
 export const Dashboard = () => {
+  const user = window.sessionStorage;
   const [isRoomModalOpen, setRoomModalOpen] = useState(false);
   const [rooms, setRooms] = useState([]);
   const [error, setError] = useState();
@@ -16,6 +17,7 @@ export const Dashboard = () => {
   const onSubmitZip = async (data) => {
     setError();
     setRooms([]);
+    data.userId = user.id;
     const res = await CallAPI(`${API_URL}rooms/searchRooms`, "POST", data);
 
     if (res.message) {

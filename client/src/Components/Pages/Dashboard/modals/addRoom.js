@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Modal, TextInput, CallAPI, API_URL, Toast } from "../../../common";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export const AddRoom = ({ isModalOpen, closeModal }) => {
   const { register, handleSubmit, reset } = useForm();
   const [error, setError] = useState();
-
+  const nav = useNavigate();
   const onSubmitChatroom = async (data) => {
     setError();
     let zipcodeRegex = /^([0-9]{5})/;
@@ -19,7 +20,9 @@ export const AddRoom = ({ isModalOpen, closeModal }) => {
         reset();
         setError();
         closeModal();
+
         toast.success("Room Added Sucessfully!", Toast);
+        nav(`/chatroom/${res.rec_id}`);
       } else if (res.message) {
         reset();
         toast.error(res.message, Toast);
