@@ -20,13 +20,6 @@ export const ChatRoom = () => {
   const { register, handleSubmit, reset } = useForm();
 
   useEffect(() => {
-    socket.on("kicked-out", (u) => {
-      console.log(u);
-      console.log(user.id);
-      if (u == user.id) {
-        nav("/dashboard");
-      }
-    });
     GETAPI(`${API_URL}rooms/getRoom/${id.id}`).then((res) => {
       if (res.spots_availble > 0) {
         socket.emit("join-room", id.id, user.id);
@@ -43,7 +36,9 @@ export const ChatRoom = () => {
     socket.on("new-user", (user) => {
       setUsers([...users, user]);
     });
-
+    socket.on("receive-message", (message) => {
+      setChat([...chat, message]);
+    });
     const scroll = () => {
       try {
         const chatbox = document.getElementById("chat-box");
@@ -56,22 +51,20 @@ export const ChatRoom = () => {
       }
     };
     const inv = setInterval(scroll, 100);
-    socket.on("receive-message", (message) => {
-      setChat([...chat, message]);
-    });
   }, [chat, users]);
 
+  // When A Message Is Sent
   const onSubmit = (data) => {
     socket.emit("send-message", data.message, id.id, user.username);
-
     reset();
   };
 
+  // When Someone Clicks Leave Room Button
   const dashboard = () => {
     socket.emit("leave-room", id.id, user.id);
     nav("/dashboard");
   };
-  console.log(chat);
+
   return (
     <>
       <div className={styles.profile}>
@@ -86,14 +79,14 @@ export const ChatRoom = () => {
 
         <div className="flex h-screen ">
           {/* Users: */}
-          <div className="w-1/4 mx-auto border border-black h-fit">
+          {/* <div className="w-1/4 mx-auto border border-black h-fit">
             <h1>
               Users:{" "}
               <ul>
                 {room ? room.users.map((user) => <li>{user.socketId}</li>) : ""}
               </ul>
             </h1>
-          </div>
+          </div> */}
 
           {/* Chat Box */}
           <div className="w-1/2 mx-auto ">
